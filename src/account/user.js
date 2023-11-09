@@ -1,79 +1,75 @@
 import React, { useContext, useState, useEffect } from "react";
-import { UserContext } from "../context/userContext";
-import { ReviewerContext } from "../context/reviewerContext";
-//import { Navigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import {
   Container,
   Card,
   CardBody,
   CardTitle,
   Table,
-  Button,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Button,
 } from "reactstrap";
-import "./user.css";
+import { useNavigate } from "react-router-dom";
+import { ReviewerContext } from "../context/reviewerContext";
+import { UserContext } from "../context/userContext";
+import axios from "axios";
+import "./user.css"; // Import the CSS file
 
 const User = () => {
-  const context = useContext(UserContext);
   const reviewerContext = useContext(ReviewerContext);
-
-  const [reviews, setReviewList] = useState([]);
+  const authContext = useContext(UserContext);
+  const [reviews, setReviews] = useState([]);
   const [openDropdowns, setOpenDropdowns] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (reviewerContext.reviewer && reviewerContext.reviewer.appUid) {
-        try {
-          const userReviewResponse = await fetch(
-            `https://language-learning-game-backend.rishavkumaraug20005212.workers.dev/user/languages?userId=${reviewerContext.reviewer.appUid}`
-          );
-          const userData = await userReviewResponse.json();
-          setReviewList(userData);
-        } catch (error) {
-          console.error("Error fetching user subjects or subject list:", error);
-        }
+    // Fetch reviews for the logged-in user
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get(
+          `YOUR_API_ENDPOINT/reviews?appUid=${reviewerContext.reviewer.appUid}`
+        );
+        setReviews(response.data);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
       }
     };
 
-    fetchData();
-  }, [reviewerContext.reviewer]);
+    fetchReviews();
+  }, [authContext.user, reviewerContext.reviewer, navigate]);
 
-//   if (!context.user?.uid) {
-//     return <Navigate to="/signin" />;
-//   }
-//   if (!reviewerContext.reviewer?.appUid) {
-//     return <Navigate to="/" />;
-//   }
-
-  const name = reviewerContext.reviewer.name || "guest";
-  const email = context.user.email;
-  const gameUid = reviewerContext.reviewer.appUid || "user not logged in";
-
-  const toggleDropdown = (subjectId, isOpen) => {
-    setOpenDropdowns((prevOpenDropdowns) => ({
-      ...prevOpenDropdowns,
-      [subjectId]: isOpen,
-    }));
+  const toggleDropdown = (breweryId, isOpen) => {
+    setOpenDropdowns({
+      ...openDropdowns,
+      [breweryId]: isOpen,
+    });
   };
 
-  const handleSeeBrewery = (subjectName) => {
-    // Implement the action for "See Brewery Details"
-    toast.info(`Seeing details for ${subjectName}`);
+  const handleSeeBrewery = (breweryName) => {
+    // Handle the action for seeing brewery details
+    console.log(`See details for ${breweryName}`);
   };
 
-  const handleVisitBrewery = (subjectId) => {
-    // Implement the action for "See Brewery Website"
-    toast.info(`Visiting website for Brewery ${subjectId}`);
+  const handleVisitBrewery = (breweryId) => {
+    // Handle the action for visiting brewery website
+    console.log(`Visit website for brewery ID: ${breweryId}`);
   };
 
   const handleAddNewReview = () => {
-    // Implement the action for "Add new Review"
-    toast.success("Adding new Review");
+    // Handle the action for adding a new review
+    console.log("Add new review");
   };
+
+  // Check if the reviewer is logged in
+  if (!authContext.user?.uid) {
+    navigate("/signin"); // Redirect to sign-in if not logged in
+  }
+
+  const name = "guest";
+  const email = authContext.user.email;
+  const gameUid = "user not logged in";
 
   return (
     <Container fluid className="user-container">
