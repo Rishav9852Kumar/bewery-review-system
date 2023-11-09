@@ -20,9 +20,10 @@ import { app } from "./config/firebase-config";
 // Contexts
 import { UserContext } from "./context/userContext";
 import { ReviewerContext } from "./context/reviewerContext";
+import {ReviewContext} from "./context/reviewContext";
 
 // Layout Components
-import Footer from "./footer/Footer";
+import Footer from "./footer/footer";
 import Header from "./header/Header";
 
 // Home Page
@@ -36,6 +37,7 @@ import PageNotFound from "./utils/NotFound";
 function App() {
   const [user, setUser] = useState(null);
   const [reviewer, setReviewer] = useState(null);
+  const [review, setReview] = useState(null);
 
   const auth = getAuth(app);
 
@@ -52,6 +54,7 @@ function App() {
       <ToastContainer />
       <UserContext.Provider value={{ user, setUser }}>
         <ReviewerContext.Provider value={{ reviewer, setReviewer }}>
+        <ReviewContext.Provider value={{ review, setReview }}>
           <Header />
           <Routes>
             <Route exact path="/" element={<HomePage />} />
@@ -63,6 +66,7 @@ function App() {
             <Route exact path="*" element={<PageNotFound />} />
           </Routes>
           <Footer />
+          </ReviewContext.Provider>
         </ReviewerContext.Provider>
       </UserContext.Provider>
     </Router>

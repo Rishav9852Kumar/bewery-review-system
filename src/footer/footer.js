@@ -17,12 +17,6 @@ const Footer = () => {
                 <Link to="/about">About</Link>
               </li>
               <li>
-                <Link to="/user/leaderboard">Leaderboard</Link>
-              </li>
-              <li>
-                <Link to="/user/admin">Admin</Link>
-              </li>
-              <li>
                 <Link to="/user">User</Link>
               </li>
             </ul>
