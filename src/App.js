@@ -32,7 +32,7 @@ import HomePage from "./home/HomePage";
 // Other Pages
 import ReviewPage from "./pages/ReviewPage";
 import AboutPage from "./utils/AboutPage";
-import PageNotFound from "./utils/notFound";
+import PageNotFound from "./utils/NotFound";
 
 function App() {
   const [user, setUser] = useState(null);
