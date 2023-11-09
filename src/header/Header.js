@@ -12,12 +12,14 @@ import {
 import { IoIosLogOut } from "react-icons/io";
 import { VscAccount } from "react-icons/vsc";
 import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../context/userContext";
-import { PlayerContext } from "../context/playerContext";
+
+// Contexts
+import { UserContext } from "./context/userContext";
+import { ReviewerContext } from "./context/reviewerContext";
 
 const Header = () => {
   const userContext = useContext(UserContext);
-  const playerContext = useContext(PlayerContext);
+  const reviewerContext = useNavigate(ReviewerContext);
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +28,7 @@ const Header = () => {
 
   const handleSignOut = () => {
     userContext.setUser(null);
-    playerContext.setPlayer(null);
+    reviewerContext.setReviewer(null);
     navigate("/");
   };
 
@@ -39,7 +41,7 @@ const Header = () => {
     >
       <NavbarBrand>
         <Link to="/" className="text-white">
-          Language Learning Game
+          Brewery Review App
         </Link>
       </NavbarBrand>
 
