@@ -37,7 +37,7 @@ import PageNotFound from "./utils/NotFound";
 function App() {
   const [user, setUser] = useState(null);
   const [reviewer, setReviewer] = useState(null);
-  const [review, setReview] = useState(null);
+  const [reviewId, setReviewId] = useState(null);
 
   const auth = getAuth(app);
 
@@ -54,7 +54,7 @@ function App() {
       <ToastContainer />
       <UserContext.Provider value={{ user, setUser }}>
         <ReviewerContext.Provider value={{ reviewer, setReviewer }}>
-        <ReviewContext.Provider value={{ review, setReview }}>
+        <ReviewContext.Provider value={{ reviewId, setReviewId }}>
           <Header />
           <Routes>
             <Route exact path="/" element={<HomePage />} />

@@ -17,10 +17,19 @@
 .card {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .card:hover {
   transform: scale(1.05);
+}
+
+.card-body {
+  transition: background-color 0.3s ease-in-out;
+}
+
+.card:hover .card-body {
+  background-color: #f8f9fa;
 }
 
 .pagination-container {
@@ -97,4 +106,8 @@
   color: #0056b3;
   background-color: #e9ecef;
   border-color: #dee2e6;
+}
+.card:hover {
+  transform: scale(1.05);
+  background-color: #f8f9fa;
 }

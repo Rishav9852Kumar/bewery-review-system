@@ -1,15 +1,18 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { Container, Row, Col, Card, Form } from "react-bootstrap";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
-import "./HomePage.css";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ReviewContext } from "../context/reviewContext";
 
 const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [breweries, setBreweries] = useState([]);
   const [perPage, setPerPage] = useState(5);
-  const [filterBy, setFilterBy] = useState("name"); 
+  const [filterBy, setFilterBy] = useState("name");
+  const navigate = useNavigate();
+  const reviewContext = useContext(ReviewContext);
 
   const fetchRandomBreweries = useCallback(
     async (page = 1) => {
@@ -46,6 +49,13 @@ const HomePage = () => {
     } catch (error) {
       console.error(`Error fetching breweries by ${filterBy}:`, error);
     }
+  };
+
+  const handleCardClick = (reviewId) => {
+    // Set the reviewId in the context or perform any other action
+    reviewContext.setReviewId(reviewId);
+    // Navigate to the ReviewPage
+    navigate("/review");
   };
 
   const searchBreweries = async () => {
@@ -157,8 +167,17 @@ const HomePage = () => {
       </Row>
       <Row className="mt-4">
         {breweries.map((brewery) => (
-          <Col key={brewery.id} xs={12} md={4} className="mb-4">
-            <Card>
+          <Col
+            key={brewery.id}
+            xs={12}
+            md={4}
+            className="mb-4"
+            onClick={() => handleCardClick(brewery.id)}
+            style={{ cursor: "pointer" }}
+          >
+            <Card className="h-100">
+              {" "}
+              {/* Added h-100 class to make the Card take full height */}
               <Card.Body>
                 <Card.Title>{brewery.name}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
