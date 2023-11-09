@@ -1,34 +1,69 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Container, Row, Col, Card, Form } from "react-bootstrap";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
+import "./HomePage.css";
+import { toast } from "react-toastify";
 
 const HomePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [breweries, setBreweries] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(5);
+  const [filterBy, setFilterBy] = useState("name"); 
+
+  const fetchRandomBreweries = useCallback(
+    async (page = 1) => {
+      try {
+        const response = await axios.get(
+          `https://api.openbrewerydb.org/v1/breweries/random?size=${perPage}&page=${page}`
+        );
+        setBreweries(response.data);
+      } catch (error) {
+        console.error("Error fetching random breweries:", error);
+      }
+    },
+    [perPage]
+  );
 
   useEffect(() => {
-    // Fetch initial random breweries
     fetchRandomBreweries();
-  }, []);
+  }, [perPage, filterBy, fetchRandomBreweries]);
 
-  const fetchRandomBreweries = async () => {
+  const fetchBreweriesByFilter = async () => {
     try {
       const response = await axios.get(
-        `https://api.openbrewerydb.org/v1/breweries/random?size=${perPage}`
+        `https://api.openbrewerydb.org/v1/breweries?by_${filterBy}=${searchTerm}&per_page=${perPage}`
+      );
+      toast(
+        "Results found for " +
+          `${filterBy} : ${searchTerm} = ` +
+          response.data.length,
+        {
+          type: "success",
+        }
       );
       setBreweries(response.data);
     } catch (error) {
-      console.error("Error fetching random breweries:", error);
+      console.error(`Error fetching breweries by ${filterBy}:`, error);
     }
   };
 
-  const handleSearch = async () => {
+  const searchBreweries = async () => {
     try {
       const response = await axios.get(
-        `https://api.openbrewerydb.org/v1/breweries/search?query=${searchTerm}&per_page=${perPage}`
+        `https://api.openbrewerydb.org/v1/breweries/search?query=${searchTerm}`
+      );
+      console.log(
+        "searching by " +
+          `https://api.openbrewerydb.org/v1/breweries/search?query=${searchTerm}`
+      );
+      toast(
+        "Results found for " +
+          `${filterBy} : ${searchTerm} = ` +
+          response.data.length,
+        {
+          type: "success",
+        }
       );
       setBreweries(response.data);
     } catch (error) {
@@ -36,15 +71,31 @@ const HomePage = () => {
     }
   };
 
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-    fetchRandomBreweries(newPage);
-  };
-
   const handlePerPageChange = (e) => {
     setPerPage(parseInt(e.target.value, 10));
-    setCurrentPage(1);
-    fetchRandomBreweries(1, parseInt(e.target.value, 10));
+  };
+
+  const handleFilterChange = (e) => {
+    setFilterBy(e.target.value);
+  };
+
+  const handleSearch = async () => {
+    if (!searchTerm.trim()) {
+      toast("Please enter a search term", {
+        type: "error",
+      });
+      return;
+    }
+    if (
+      filterBy === "name" ||
+      filterBy === "state" ||
+      filterBy === "type" ||
+      filterBy === "city"
+    ) {
+      fetchBreweriesByFilter();
+    } else {
+      searchBreweries();
+    }
   };
 
   const renderStars = (rating) => {
@@ -67,6 +118,20 @@ const HomePage = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
+            </Form.Group>
+            <Form.Group controlId="filterBy">
+              <Form.Label>Filter By:</Form.Label>
+              <Form.Control
+                as="select"
+                onChange={handleFilterChange}
+                value={filterBy}
+              >
+                <option value="name">Brewery Name</option>
+                <option value="city">City</option>
+                <option value="state">State</option>
+                <option value="type">Brewery Type</option>
+                <option value="tag">Tag</option>
+              </Form.Control>
             </Form.Group>
             <Form.Group controlId="perPage">
               <Form.Label>Per Page:</Form.Label>
@@ -119,25 +184,6 @@ const HomePage = () => {
             </Card>
           </Col>
         ))}
-      </Row>
-      <Row className="mt-4">
-        <Col>
-          <button
-            type="button"
-            className="btn btn-secondary mr-2"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Previous Page
-          </button>
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={() => handlePageChange(currentPage + 1)}
-          >
-            Next Page
-          </button>
-        </Col>
       </Row>
     </Container>
   );
