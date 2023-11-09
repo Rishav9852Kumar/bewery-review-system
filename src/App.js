@@ -30,8 +30,8 @@ import Header from "./header/Header";
 import HomePage from "./home/HomePage";
 
 // Other Pages
-import ReviewPage from "./pages/reviewPage";
-import AboutPage from "./utils/aboutPage";
+import ReviewPage from "./pages/ReviewPage";
+import AboutPage from "./utils/AboutPage";
 import PageNotFound from "./utils/notFound";
 
 function App() {

@@ -1,45 +1,111 @@
-import React from "react";
+// ReviewSubmitPopUp.js
+
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
+import StarRating from "./StarRating"; // Create or import a StarRating component
+
 import "./ReviewSubmitPopUp.css";
 
-const FinalScorePopup = ({ questions, answers }) => {
+const ReviewSubmitPopUp = ({ breweryName, onSubmit, isOpen, toggle }) => {
   const navigate = useNavigate();
 
-  const handleReturnToHomePage = () => {
-    navigate("/"); // Navigate to the home page
+  const [formData, setFormData] = useState({
+    comment: "",
+    stars: 1,
+  });
+
+  const [formErrors, setFormErrors] = useState({
+    comment: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setFormErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
 
-  // Calculating scores and counts
-  const totalQuestions = questions.length;
-  let correctCount = 0;
-  let incorrectCount = 0;
-  let unansweredCount = 0;
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = {};
 
-  for (let i = 0; i < totalQuestions; i++) {
-    if (answers[i] === questions[i].correctAnswer) {
-      correctCount++;
-    } else if (answers[i]) {
-      incorrectCount++;
-    } else {
-      unansweredCount++;
+    // Validate comment
+    if (!formData.comment.trim()) {
+      valid = false;
+      newErrors.comment = "Comment is required.";
     }
-  }
 
-  // Calculating the final score
-  const score = correctCount;
+    setFormErrors(newErrors);
+    return valid;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (validateForm()) {
+      // Assuming you have an API endpoint for submitting reviews
+      try {
+        // Perform API call to submit the review data
+        await onSubmit(formData);
+
+        // Show success toast
+        alert("Review added successfully!");
+
+        // Navigate to the home page
+        navigate("/");
+      } catch (error) {
+        // Show error toast
+        alert("Error adding review. Please try again.");
+        console.error("Error adding review:", error);
+      }
+    }
+  };
 
   return (
-    <div className="popup">
-      <div className="popup-content">
-        <h2>Your Final Score</h2>
-        <p>Score: {score}</p>
-        <p>Correct Answers: {correctCount}</p>
-        <p>Incorrect Answers: {incorrectCount}</p>
-        <p>Unanswered Questions: {unansweredCount}</p>
-        <button onClick={handleReturnToHomePage}>Return to Home Page</button>
-      </div>
-    </div>
+    <Modal isOpen={isOpen} toggle={toggle}>
+      <ModalHeader toggle={toggle}>Review for {breweryName}</ModalHeader>
+      <ModalBody>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="comment">Comment:</label>
+            <textarea
+              id="comment"
+              name="comment"
+              value={formData.comment}
+              onChange={handleChange}
+              className={`form-control ${
+                formErrors.comment ? "is-invalid" : ""
+              }`}
+              required
+            />
+            <div className="invalid-feedback">{formErrors.comment}</div>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="stars">Stars:</label>
+            <StarRating
+              id="stars"
+              name="stars"
+              value={formData.stars}
+              onChange={(value) =>
+                setFormData((prevData) => ({ ...prevData, stars: value }))
+              }
+              maxStars={5}
+            />
+          </div>
+
+          <ModalFooter>
+            <Button color="primary" type="submit">
+              Submit Review
+            </Button>{" "}
+            <Button color="secondary" onClick={toggle}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </form>
+      </ModalBody>
+    </Modal>
   );
 };
 
-export default FinalScorePopup;
+export default ReviewSubmitPopUp;
