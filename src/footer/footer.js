@@ -22,7 +22,7 @@ const Footer = () => {
             </ul>
           </Col>
           <Col sm={6} className="footer-text">
-            &copy; 2023 Language Learning Game (LLG). All rights reserved.
+            &copy; 2023 Bewery Review App (BRA). All rights reserved.
           </Col>
         </Row>
       </Container>
