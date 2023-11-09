@@ -24,7 +24,7 @@ import {ReviewContext} from "./context/reviewContext";
 
 // Layout Components
 import Footer from "./footer/footer";
-import Header from "./header/header";
+import Header from "./header/Header";
 
 // Home Page
 import HomePage from "./home/homePage";
