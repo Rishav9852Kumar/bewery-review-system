@@ -27,7 +27,7 @@ import Footer from "./footer/footer";
 import Header from "./header/Header";
 
 // Home Page
-import HomePage from "./home/homePage";
+import HomePage from "./home/HomePage";
 
 // Other Pages
 import ReviewPage from "./pages/reviewPage";
