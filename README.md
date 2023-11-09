@@ -1,5 +1,6 @@
 
 ## Site status [![Netlify Status](https://api.netlify.com/api/v1/badges/5f885ac5-b061-4970-880d-708d1bd6fd5c/deploy-status)](https://app.netlify.com/sites/bewery-review-system/deploys)
+### Live Site [https://app.netlify.com/sites/bewery-review-system/configuration/deploys][https://app.netlify.com/sites/bewery-review-system/configuration/deploys]
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
