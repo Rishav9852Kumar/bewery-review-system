@@ -1,39 +1,43 @@
 import "react-toastify/dist/ReactToastify.css";
-import {
-  getAuth,
-  setPersistence,
-  browserLocalPersistence,
-} from "firebase/auth";
+import { getAuth, setPersistence, browserLocalPersistence } from "firebase/auth";
 import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-//style
+// Styles
 import "./App.css";
-//account
-import SignIn from "./account/signIn.js";
-import SignUp from "./account/signUp.js";
-import User from "./account/user.js";
-//config
-import { app } from "./config/firebase-config.js";
-//context
-import { UserContext } from "./context/userContext.js";
-import { ReviewerContext } from "./context/reviewerContext.js";
-//layout
-import Footer from "./footer/footer.js";
-import Header from "./header/Header.js";
-//home
-import HomePage from "./home/HomePage.js";
-//pages
-import ReviewPage from "./pages/ReviewPage.js";
-//utils
-import PageNotFound from "./utils/NotFound.js";
-//about
-import AboutPage from "./utils/AboutPage.js";
 
+//toast stuff
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// Account Components
+import SignIn from "./account/SignIn";
+import SignUp from "./account/SignUp";
+import User from "./account/User";
+
+// Firebase Configuration
+import { app } from "./config/firebase-config";
+
+// Contexts
+import { UserContext } from "./context/userContext";
+import { ReviewerContext } from "./context/reviewerContext";
+
+// Layout Components
+import Footer from "./footer/Footer";
+import Header from "./header/Header";
+
+// Home Page
+import HomePage from "./home/HomePage";
+
+// Other Pages
+import ReviewPage from "./pages/ReviewPage";
+import AboutPage from "./utils/AboutPage";
+import PageNotFound from "./utils/NotFound";
 
 function App() {
   const [user, setUser] = useState(null);
   const [reviewer, setReviewer] = useState(null);
-  
+
   const auth = getAuth(app);
 
   useEffect(() => {
