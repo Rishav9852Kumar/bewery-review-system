@@ -1,0 +1,29 @@
+/* PageNotFound.css */
+
+.not-found-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.not-found-content {
+  text-align: center;
+}
+
+.not-found-heading {
+  font-size: 6rem;
+  color: #333;
+}
+
+.not-found-message {
+  font-size: 2rem;
+  color: #333;
+  margin: 10px 0;
+}
+
+.not-found-description {
+  font-size: 1.2rem;
+  color: #555;
+}

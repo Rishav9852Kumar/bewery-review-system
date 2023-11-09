@@ -1,0 +1,42 @@
+/* Footer.css */
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap; 
+}
+
+.footer-links li {
+  margin-right: 20px;
+  white-space: nowrap; 
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.footer-text {
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Additional CSS for small screens (mobile) */
+@media (max-width: 575px) {
+  .footer-links {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .footer-links li {
+    margin-bottom: 10px;
+  }
+}

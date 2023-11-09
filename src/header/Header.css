@@ -1,0 +1,61 @@
+/* Header.css */
+.container-fluid {
+  background-color: #007bff;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container-fluid a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.container-fluid a:hover {
+  color: #fff;
+}
+
+.navbar-brand {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  cursor: pointer;
+}
+
+.navbar-toggler-icon {
+  background-color: #fff;
+}
+
+.container-fluid .navbar-nav {
+  display: flex;
+}
+
+.container-fluid .navbar-nav .nav-item {
+  margin-right: 20px;
+}
+
+.container-fluid .navbar-nav .nav-item:last-child {
+  margin-right: 0;
+}
+
+.container-fluid .navbar-nav .nav-item .nav-link {
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.navbar-nav .navbar-text {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-end {
+  margin-left: auto;
+}
+
+.navbar-end .nav-link {
+  display: flex;
+  align-items: center;
+}

@@ -1,38 +1,23 @@
-.App {
-  text-align: center;
+/* Add CSS styles for SignInPage */
+#signin-card {
+  background-color: #007bff; /* Background color for the card */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#signin-header {
+  background-color: #0056b3; /* Background color for the card header */
+  color: #fff; /* Text color for the card header */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#signin-body {
+  background-color: #f5f5f5; /* Background color for the card body */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#signin-button {
+  background-color: #007bff; /* Background color for the "Sign In" button */
+  color: #fff; /* Text color for the "Sign In" button */
+  border: none; /* Remove button border */
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#signin-button:hover {
+  background-color: #0056b3; /* Background color for the button on hover */
 }
