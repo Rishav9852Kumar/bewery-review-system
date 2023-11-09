@@ -90,7 +90,7 @@ const SignUp = () => {
 
         if (userDetails && userDetails.UserId) {
           const userName = userDetails.UserName;
-          const gameUid = userDetails.UserId;
+          const appUid = userDetails.UserId;
 
           reviewerContext.setPlayer({
             email: email,

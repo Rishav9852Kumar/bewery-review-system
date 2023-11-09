@@ -6,14 +6,27 @@ body {
 }
 
 .homepage-container {
-background-color: #f8f9fa;
+  background-color: #f8f9fa;
   font-family: 'Arial', sans-serif;
   padding: 40px 0;
-  text-align: center; 
-  min-height: 100vh; 
+  text-align: center;
+  min-height: 100vh;
 }
 
-.game-card {
+form {
+  margin-bottom: 20px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.card {
   margin: 1rem;
   padding: 1rem;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
@@ -22,7 +35,7 @@ background-color: #f8f9fa;
   transition: transform 0.2s;
 }
 
-.game-card:hover {
+.card:hover {
   transform: scale(1.03);
 }
 
@@ -32,40 +45,22 @@ h1 {
   margin-bottom: 1.5rem;
 }
 
-.game-level {
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-}
-
-.game-level-easy {
-  background-color: #5bc0de;
-  color: white;
-}
-
-.game-level-medium {
-  background-color: #f0ad4e; 
-  color: white;
-}
-
-.game-level-hard {
-  background-color: #d9534f;
-  color: white;
-}
-
-.game-description {
+.card-subtitle {
   font-size: 1rem;
   margin-bottom: 0.5rem;
 }
 
-.game-link {
+.card-text {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-link {
   font-size: 1rem;
   text-decoration: none;
   color: #007bff;
 }
 
-.game-link:hover {
+.card-link:hover {
   text-decoration: underline;
 }

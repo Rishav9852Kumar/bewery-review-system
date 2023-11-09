@@ -14,8 +14,8 @@ import { VscAccount } from "react-icons/vsc";
 import { Link, useNavigate } from "react-router-dom";
 
 // Contexts
-import { UserContext } from "./context/userContext";
-import { ReviewerContext } from "./context/reviewerContext";
+import { UserContext } from "../context/userContext";
+import { ReviewerContext } from "../context/reviewerContext";
 
 const Header = () => {
   const userContext = useContext(UserContext);
