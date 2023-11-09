@@ -52,8 +52,8 @@ const HomePage = () => {
   };
 
   const handleCardClick = (reviewId) => {
-    // Set the reviewId in the context or perform any other action
     reviewContext.setReviewId(reviewId);
+    console.log("reviewContext", reviewContext);
     // Navigate to the ReviewPage
     navigate("/review");
   };
@@ -177,7 +177,6 @@ const HomePage = () => {
           >
             <Card className="h-100">
               {" "}
-              {/* Added h-100 class to make the Card take full height */}
               <Card.Body>
                 <Card.Title>{brewery.name}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
