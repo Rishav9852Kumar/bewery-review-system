@@ -11,7 +11,7 @@ import {
   DropdownItem,
   Button,
 } from "reactstrap";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { ReviewerContext } from "../context/reviewerContext";
 import { UserContext } from "../context/userContext";
 import axios from "axios";
@@ -22,23 +22,24 @@ const User = () => {
   const authContext = useContext(UserContext);
   const [reviews, setReviews] = useState([]);
   const [openDropdowns, setOpenDropdowns] = useState({});
-  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch reviews for the logged-in user
     const fetchReviews = async () => {
-      try {
-        const response = await axios.get(
-          `YOUR_API_ENDPOINT/reviews?appUid=${reviewerContext.reviewer.appUid}`
-        );
-        setReviews(response.data);
-      } catch (error) {
-        console.error("Error fetching reviews:", error);
+      if (reviewerContext.reviewer && reviewerContext.reviewer.appUid) {
+        try {
+          const response = await axios.get(
+            `YOUR_API_ENDPOINT/reviews?appUid=${reviewerContext.reviewer.appUid}`
+          );
+          setReviews(response.data);
+        } catch (error) {
+          console.error("Error fetching reviews:", error);
+        }
       }
     };
 
     fetchReviews();
-  }, [authContext.user, reviewerContext.reviewer, navigate]);
+  }, [reviewerContext.reviewer]);
 
   const toggleDropdown = (breweryId, isOpen) => {
     setOpenDropdowns({
@@ -46,7 +47,10 @@ const User = () => {
       [breweryId]: isOpen,
     });
   };
-
+  // Check if the reviewer is logged in
+  if (!authContext.user?.uid) {
+    return <Navigate to="/signin" />;
+  }
   const handleSeeBrewery = (breweryName) => {
     // Handle the action for seeing brewery details
     console.log(`See details for ${breweryName}`);
@@ -61,11 +65,6 @@ const User = () => {
     // Handle the action for adding a new review
     console.log("Add new review");
   };
-
-  // Check if the reviewer is logged in
-  if (!authContext.user?.uid) {
-    navigate("/signin"); // Redirect to sign-in if not logged in
-  }
 
   const name = "guest";
   const email = authContext.user.email;
