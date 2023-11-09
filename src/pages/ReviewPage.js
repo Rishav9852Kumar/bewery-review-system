@@ -1,15 +1,30 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Container, Card, CardBody, CardTitle, CardSubtitle } from "reactstrap";
+import {
+  Container,
+  Card,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+} from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ReviewContext } from "../context/reviewContext";
-import "./ReviewPage.css"; 
+import "./ReviewPage.css";
+import { toast } from "react-toastify";
 
 const ReviewPage = () => {
   const reviewContext = useContext(ReviewContext);
   const navigate = useNavigate();
   const [breweryDetails, setBreweryDetails] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [isAddReviewOpen, setIsAddReviewOpen] = useState(false);
+  const [comment, setComment] = useState("");
+  const [stars, setStars] = useState(1);
 
   const fetchBreweryDetails = async (reviewId) => {
     try {
@@ -33,12 +48,32 @@ const ReviewPage = () => {
     }
   };
 
+  const submitReview = async () => {
+    try {
+      const response = await axios.post("YOUR_REVIEW_API_ENDPOINT", {
+        reviewId: reviewContext.reviewId,
+        comment,
+        stars,
+      });
+      console.log("Review submitted successfully:", response.data);
+       toast("Review submitted successfully", {
+         type: "success",
+       });
+      // Refresh reviews after submission
+      fetchReviews(reviewContext.reviewId);
+    } catch (error) {
+      console.error("Error submitting review:", error);
+    }
+  };
+
   useEffect(() => {
     if (!reviewContext.reviewId) {
       navigate("/");
     } else {
       fetchBreweryDetails(reviewContext.reviewId);
       fetchReviews(reviewContext.reviewId);
+      // Set the form to be open when the component mounts
+      setIsAddReviewOpen(true);
     }
   }, [reviewContext.reviewId, navigate]);
 
@@ -105,6 +140,50 @@ const ReviewPage = () => {
           </CardBody>
         </Card>
       )}
+
+      {/* Add Review Form */}
+      <Form
+        onSubmit={(e) => {
+          e.preventDefault();
+          submitReview();
+          setIsAddReviewOpen(false);
+        }}
+        style={{
+          display: isAddReviewOpen ? "block" : "none",
+          marginTop: "20px",
+        }}
+      >
+        <FormGroup>
+          <Label for="comment">Comment:</Label>
+          <Input
+            type="textarea"
+            name="comment"
+            id="comment"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            required
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="stars">Stars:</Label>
+          <Input
+            type="select"
+            name="stars"
+            id="stars"
+            value={stars}
+            onChange={(e) => setStars(e.target.value)}
+          >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </Input>
+        </FormGroup>
+        <Button color="primary" type="submit">
+          Submit Review
+        </Button>{" "}
+      </Form>
 
       {reviews.length > 0 && (
         <Container>
