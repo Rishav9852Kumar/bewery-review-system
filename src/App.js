@@ -10,9 +10,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // Account Components
-import SignIn from "./account/SignIn";
-import SignUp from "./account/SignUp";
-import User from "./account/User";
+import SignIn from "./account/signIn";
+import SignUp from "./account/signUp";
+import User from "./account/user";
 
 // Firebase Configuration
 import { app } from "./config/firebase-config";
@@ -24,15 +24,15 @@ import {ReviewContext} from "./context/reviewContext";
 
 // Layout Components
 import Footer from "./footer/footer";
-import Header from "./header/Header";
+import Header from "./header/header";
 
 // Home Page
-import HomePage from "./home/HomePage";
+import HomePage from "./home/homePage";
 
 // Other Pages
-import ReviewPage from "./pages/ReviewPage";
-import AboutPage from "./utils/AboutPage";
-import PageNotFound from "./utils/NotFound";
+import ReviewPage from "./pages/reviewPage";
+import AboutPage from "./utils/aboutPage";
+import PageNotFound from "./utils/notFound";
 
 function App() {
   const [user, setUser] = useState(null);
