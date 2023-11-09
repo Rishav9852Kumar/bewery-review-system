@@ -29,7 +29,7 @@ import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const SignIn = () => {
-  const userContext = useContext(UserContext);
+  const context = useContext(UserContext);
   const reviewerContext = useContext(ReviewerContext);
   const [email, setEmail] = useState("guest@123.gmail.com");
   const [password, setPassword] = useState("Strong@123");
@@ -100,7 +100,7 @@ const SignIn = () => {
             // Fetching user details from the API and update context
             fetchUserDetails(user.email);
             console.log("context user= " + context.user);
-            console.log("context user (for db)= " + reviewerContext.reviewer);
+            console.log("context user (for db )= " + reviewerContext.reviewer);
           })
           .catch((error) => {
             console.log(error);
