@@ -20,7 +20,6 @@ import {
   CardFooter,
   CardHeader,
 } from "reactstrap";
-
 import "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { UserContext } from "../context/userContext";
@@ -36,24 +35,24 @@ const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchUserDetails = async (email) => {
-    const apiUrl = "/api/user/addUser";
+    const apiUrl = `https://dark-sea-fd57.rishavkumaraug20005212.workers.dev/user?userEmail=${email}`;
 
     try {
       const response = await fetch(apiUrl, {
         method: "GET",
       });
-
+      console.log("response= " + response);
       if (response.ok) {
         const userDetails = await response.json();
         const userName = userDetails.UserName;
         const appUid = userDetails.UserId;
 
-        reviewerContext.setPlayer({
+        reviewerContext.setReviewer({
           email: email,
           name: userName,
           appUid: appUid,
         });
-
+        
         console.log("user logged in ... " + userDetails.UserName);
 
         setIsLoading(false);
@@ -88,7 +87,7 @@ const SignIn = () => {
 
     setPersistence(auth, browserLocalPersistence)
       .then(() => {
-        // Siging in with email and password
+        // Signing in with email and password
         signInWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             // Signed in
@@ -121,12 +120,13 @@ const SignIn = () => {
     if (isLoading) {
       toast("Signing in...", {
         type: "info",
-        autoClose: true, //  auto-close this toast
+        autoClose: true, // auto-close this toast
       });
     } else {
       toast.dismiss(); // Dismiss any active toasts
     }
   }, [isLoading]);
+
   const defaultlogin = () => {
     setEmail("guest@123.gmail.com");
     setPassword("Strong@123");
@@ -143,6 +143,7 @@ const SignIn = () => {
   if (context.user?.uid) {
     return <Navigate to="/" />;
   }
+
   return (
     <div
       style={{
@@ -215,4 +216,5 @@ const SignIn = () => {
     </div>
   );
 };
+
 export default SignIn;

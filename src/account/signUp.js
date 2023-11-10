@@ -92,7 +92,7 @@ const SignUp = () => {
           const userName = userDetails.UserName;
           const appUid = userDetails.UserId;
 
-          reviewerContext.setPlayer({
+          reviewerContext.setReviewer({
             email: email,
             name: userName,
             appUid: appUid,

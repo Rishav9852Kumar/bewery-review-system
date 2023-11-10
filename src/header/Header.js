@@ -19,7 +19,7 @@ import { ReviewerContext } from "../context/reviewerContext";
 
 const Header = () => {
   const userContext = useContext(UserContext);
-  const reviewerContext = useNavigate(ReviewerContext);
+  const reviewerContext = useContext(ReviewerContext);
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
