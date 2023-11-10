@@ -23,30 +23,34 @@ const AboutPage = () => {
           <Card>
             <CardBody>
               <h1 className="display-4 about-heading">
-                About Our Language Learning Game
+                About the Brewery Review System
               </h1>
               <p className="lead about-description">
-                Welcome to our language learning game! Our game is designed to
-                help you improve your language skills while having fun.
+                Welcome to the Brewery Review System! Our platform allows users
+                to explore and review various breweries, sharing their
+                experiences with the community.
               </p>
             </CardBody>
           </Card>
-          <h2 className="about-subheading">How to Play</h2>
+          <h2 className="about-subheading">How it Works</h2>
           <p className="about-description">
-            Playing our game is easy. Just follow these steps:
+            Using our platform is simple. Follow these steps:
           </p>
           <ListGroup className="about-list">
-            <ListGroupItem>Choose a language you want to learn.</ListGroupItem>
             <ListGroupItem>
-              Answer quiz questions to test your knowledge.
+              Explore a wide range of breweries listed on our platform.
             </ListGroupItem>
             <ListGroupItem>
-              Earn points and progress to higher levels.
+              Share your brewery experiences by adding reviews.
+            </ListGroupItem>
+            <ListGroupItem>
+              Read reviews from other users to discover new and exciting
+              breweries.
             </ListGroupItem>
           </ListGroup>
           <h2 className="about-subheading">Tools and Technologies</h2>
           <p className="about-description">
-            Our game is built using the following tools and technologies:
+            Our platform utilizes the following tools and technologies:
           </p>
           <Row>
             <Col xs={12} sm={6} md={6} lg={3}>
@@ -61,8 +65,8 @@ const AboutPage = () => {
           <img src={yourImage} alt="Your" className="your-image" />
           <h2 className="about-subheading">About the Developer</h2>
           <p className="about-description">
-            Hi, I'm Rishav Kumar, the developer of this game. If you have any
-            questions or feedback, please feel free to contact me:
+            Hi, I'm Rishav Kumar, the developer of the Brewery Review System. If
+            you have any questions or feedback, feel free to contact me:
           </p>
           <Card>
             <CardBody>
@@ -72,21 +76,21 @@ const AboutPage = () => {
           </Card>
           <h2 className="about-subheading">GitHub Repositories</h2>
           <p className="about-description">
-            You can find the source code for our game on GitHub:
+            You can find the source code for our system on GitHub:
           </p>
           <ListGroup className="about-list">
             <ListGroupItem>
-              <a href="https://github.com/Rishav9852Kumar/language-learning-game-frontend">
+              <a href="https://github.com/Rishav9852Kumar/bewery-review-system">
                 Front-End Repository
               </a>
             </ListGroupItem>
             <ListGroupItem>
-              <a href="https://github.com/Rishav9852Kumar/language-learning-game-backend">
+              <a href="https://github.com/Rishav9852Kumar/bewery-review-system">
                 Back-End Repository
               </a>
             </ListGroupItem>
             <ListGroupItem>
-              <a href="https://drive.google.com/file/d/1BUg_SBSai1kVxAXy0H6Ys6P2cfXB-R7k/view?usp=drive_link">
+              <a href="https://github.com/Rishav9852Kumar/bewery-review-system">
                 Documentation Repository
               </a>
             </ListGroupItem>
