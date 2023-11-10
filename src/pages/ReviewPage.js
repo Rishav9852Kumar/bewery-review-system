@@ -1,3 +1,4 @@
+// Import statements for React and other dependencies
 import React, { useContext, useState, useEffect } from "react";
 import {
   Container,
@@ -14,18 +15,24 @@ import {
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ReviewContext } from "../context/reviewContext";
-import "./ReviewPage.css";
+import { UserContext } from "../context/userContext";
+import "./ReviewPage.css"; 
 import { toast } from "react-toastify";
 
 const ReviewPage = () => {
+  // useContext to access review context and user context
   const reviewContext = useContext(ReviewContext);
+  const userContext = useContext(UserContext); // Use UserContext
   const navigate = useNavigate();
+
+  // State to manage brewery details, reviews, and form inputs
   const [breweryDetails, setBreweryDetails] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [isAddReviewOpen, setIsAddReviewOpen] = useState(false);
   const [comment, setComment] = useState("");
   const [stars, setStars] = useState(1);
 
+  // Function to fetch brewery details
   const fetchBreweryDetails = async (reviewId) => {
     try {
       const response = await axios.get(
@@ -37,6 +44,7 @@ const ReviewPage = () => {
     }
   };
 
+  // Function to fetch reviews
   const fetchReviews = async (reviewId) => {
     try {
       const response = await axios.get(
@@ -44,7 +52,7 @@ const ReviewPage = () => {
       );
       console.log("Reviews fetched successfully:", response.data.length);
       setReviews(response.data);
-      if(response.data.length === 0){
+      if (response.data.length === 0) {
         toast("No reviews found", {
           type: "info",
         });
@@ -54,21 +62,35 @@ const ReviewPage = () => {
     }
   };
 
+  // Function to submit a review
   const submitReview = async () => {
+    if (!reviewContext.reviewId || !userContext.user?.email) {
+      toast("Sign up or login to add a review", {
+        type: "warning",
+      });
+      return;
+    }
+
     try {
-      const response = await axios.post(
-        "https://dark-sea-fd57.rishavkumaraug20005212.workers.dev/reviews",
-        {
-          reviewId: reviewContext.reviewId,
-          comment,
-          stars,
-        }
-      );
-      console.log("Review submitted successfully:", response.data);
+     const queryParams = `stars=${stars}&reviewComment=${comment}&email=${
+       userContext.user.email
+     }&breweryId=${reviewContext.reviewId}&breweryName=${
+       breweryDetails?.name || "Unknown Brewery"
+     }`;
+
+     // Post the review using the provided API with query parameters
+     await axios.post(
+       `https://dark-sea-fd57.rishavkumaraug20005212.workers.dev/reviews?${queryParams}`
+     );
+
+     toast("Review submitted successfully", {
+       type: "success",
+     });
+     fetchReviews(reviewContext.reviewId);
+
       toast("Review submitted successfully", {
         type: "success",
       });
-      // Refresh reviews after submission
       fetchReviews(reviewContext.reviewId);
     } catch (error) {
       console.error("Error submitting review:", error);
@@ -77,11 +99,12 @@ const ReviewPage = () => {
 
   useEffect(() => {
     if (!reviewContext.reviewId) {
+      // If no reviewId, navigate to home page
       navigate("/");
     } else {
       fetchBreweryDetails(reviewContext.reviewId);
       fetchReviews(reviewContext.reviewId);
-      // Set the form to be open when the component mounts
+
       setIsAddReviewOpen(true);
     }
   }, [reviewContext.reviewId, navigate]);
@@ -150,7 +173,6 @@ const ReviewPage = () => {
         </Card>
       )}
 
-      {/* Add Review Form */}
       <Form
         onSubmit={(e) => {
           e.preventDefault();
@@ -221,4 +243,5 @@ const ReviewPage = () => {
   );
 };
 
+// Export the component as the default export
 export default ReviewPage;
