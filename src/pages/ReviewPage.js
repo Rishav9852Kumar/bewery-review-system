@@ -40,9 +40,15 @@ const ReviewPage = () => {
   const fetchReviews = async (reviewId) => {
     try {
       const response = await axios.get(
-        `YOUR_REVIEW_API_ENDPOINT?reviewId=${reviewId}`
+        `https://dark-sea-fd57.rishavkumaraug20005212.workers.dev/reviews?breweryId=${reviewId}`
       );
+      console.log("Reviews fetched successfully:", response.data.length);
       setReviews(response.data);
+      if(response.data.length === 0){
+        toast("No reviews found", {
+          type: "info",
+        });
+      }
     } catch (error) {
       console.error("Error fetching reviews:", error);
     }
@@ -50,15 +56,18 @@ const ReviewPage = () => {
 
   const submitReview = async () => {
     try {
-      const response = await axios.post("YOUR_REVIEW_API_ENDPOINT", {
-        reviewId: reviewContext.reviewId,
-        comment,
-        stars,
-      });
+      const response = await axios.post(
+        "https://dark-sea-fd57.rishavkumaraug20005212.workers.dev/reviews",
+        {
+          reviewId: reviewContext.reviewId,
+          comment,
+          stars,
+        }
+      );
       console.log("Review submitted successfully:", response.data);
-       toast("Review submitted successfully", {
-         type: "success",
-       });
+      toast("Review submitted successfully", {
+        type: "success",
+      });
       // Refresh reviews after submission
       fetchReviews(reviewContext.reviewId);
     } catch (error) {
@@ -88,9 +97,9 @@ const ReviewPage = () => {
             <CardSubtitle className="mb-2">
               Brewery ID: {breweryDetails.id}
             </CardSubtitle>
-            <p className="mb-1">
+            <CardSubtitle className="mb-1">
               <strong>Type:</strong> {breweryDetails.brewery_type}
-            </p>
+            </CardSubtitle>
             <p className="mb-1">
               <strong>Address 1:</strong> {breweryDetails.address_1}
             </p>
@@ -189,22 +198,19 @@ const ReviewPage = () => {
         <Container>
           <h3 className="h4 mb-3">Reviews List</h3>
           {reviews.map((review) => (
-            <Card key={review.DbReviewId} className="review-card mb-3">
+            <Card key={review.ReviewId} className="review-card mb-3">
               <CardBody>
                 <CardSubtitle className="mb-2">
-                  <strong>Date:</strong> {review.reviewDate}
+                  <strong>Date:</strong> {review.Time}
                 </CardSubtitle>
                 <CardSubtitle className="mb-2">
-                  <strong>Email:</strong> {review.reviewEmail}
+                  <strong>Email:</strong> {review.Email}
                 </CardSubtitle>
                 <CardSubtitle className="mb-2">
-                  <strong>Name:</strong> {review.reviewerName}
+                  <strong>Stars:</strong> {review.Stars}
                 </CardSubtitle>
                 <CardSubtitle className="mb-2">
-                  <strong>Stars:</strong> {review.stars}
-                </CardSubtitle>
-                <CardSubtitle className="mb-2">
-                  <strong>Comments:</strong> {review.comments}
+                  <strong>Comments:</strong> {review.ReviewComment}
                 </CardSubtitle>
               </CardBody>
             </Card>
