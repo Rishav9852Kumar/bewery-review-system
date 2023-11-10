@@ -1,3 +1,4 @@
+// Import statements for React and other dependencies
 import React, { useContext, useState, useEffect } from "react";
 import {
   Container,
@@ -5,10 +6,6 @@ import {
   CardBody,
   CardTitle,
   Table,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   Button,
 } from "reactstrap";
 import { Navigate } from "react-router-dom";
@@ -17,19 +14,22 @@ import { UserContext } from "../context/userContext";
 import axios from "axios";
 import "./user.css"; // Import the CSS file
 
+// Functional component definition
 const User = () => {
+  // useContext to access reviewer and user context
   const reviewerContext = useContext(ReviewerContext);
   const authContext = useContext(UserContext);
-  const [reviews, setReviews] = useState([]);
-  const [openDropdowns, setOpenDropdowns] = useState({});
 
+  // State to manage reviews and dropdown state
+  const [reviews, setReviews] = useState([]);
+  
+  // useEffect to fetch reviews when the component mounts or reviewer changes
   useEffect(() => {
-    // Fetch reviews for the logged-in user
     const fetchReviews = async () => {
       if (reviewerContext.reviewer && reviewerContext.reviewer.appUid) {
         try {
           const response = await axios.get(
-            `YOUR_API_ENDPOINT/reviews?appUid=${reviewerContext.reviewer.appUid}`
+            `https://dark-sea-fd57.rishavkumaraug20005212.workers.dev/reviews?userEmail=${authContext.user.email}`
           );
           setReviews(response.data);
         } catch (error) {
@@ -39,37 +39,24 @@ const User = () => {
     };
 
     fetchReviews();
-  }, [reviewerContext.reviewer]);
+  }, [reviewerContext.reviewer, authContext.user]);
 
-  const toggleDropdown = (breweryId, isOpen) => {
-    setOpenDropdowns({
-      ...openDropdowns,
-      [breweryId]: isOpen,
-    });
-  };
-  // Check if the reviewer is logged in
-  if (!authContext.user?.uid) {
+  // If user or reviewer is not logged in, navigate to the signin page
+  if (!authContext.user?.uid || !reviewerContext.reviewer?.appUid) {
     return <Navigate to="/signin" />;
   }
-  const handleSeeBrewery = (breweryName) => {
-    // Handle the action for seeing brewery details
-    console.log(`See details for ${breweryName}`);
-  };
 
-  const handleVisitBrewery = (breweryId) => {
-    // Handle the action for visiting brewery website
-    console.log(`Visit website for brewery ID: ${breweryId}`);
-  };
-
+  // Function to handle adding a new review
   const handleAddNewReview = () => {
-    // Handle the action for adding a new review
     console.log("Add new review");
   };
 
-  const name = "guest";
+  // Extracting name, email, and gameUid from contexts
+  const name = reviewerContext.reviewer.name || "User";
   const email = authContext.user.email;
-  const gameUid = "user not logged in";
+  const gameUid = reviewerContext.reviewer.appUid || "user not logged in";
 
+  // JSX structure for the component
   return (
     <Container fluid className="user-container">
       <div className="user-details">
@@ -85,45 +72,18 @@ const User = () => {
             <thead>
               <tr>
                 <th>Name of Brewery</th>
-                <th>Location</th>
                 <th>Stars</th>
                 <th>Comments</th>
-                <th>Brewery Link</th>
+                <th>Time</th>
               </tr>
             </thead>
             <tbody>
               {reviews.map((review, index) => (
                 <tr key={index}>
                   <td>{review.BreweryName}</td>
-                  <td>{review.BreweryLocation}</td>
                   <td>{review.Stars}</td>
-                  <td>{review.Comments}</td>
-                  <td>{review.Link}</td>
-                  <td>
-                    <Dropdown
-                      isOpen={openDropdowns[review.BreweryId] || false}
-                      toggle={() =>
-                        toggleDropdown(
-                          review.BreweryId,
-                          !openDropdowns[review.BreweryId]
-                        )
-                      }
-                    >
-                      <DropdownToggle caret>Actions</DropdownToggle>
-                      <DropdownMenu>
-                        <DropdownItem
-                          onClick={() => handleSeeBrewery(review.BreweryName)}
-                        >
-                          See Brewery Details
-                        </DropdownItem>
-                        <DropdownItem
-                          onClick={() => handleVisitBrewery(review.BreweryId)}
-                        >
-                          See Brewery Website
-                        </DropdownItem>
-                      </DropdownMenu>
-                    </Dropdown>
-                  </td>
+                  <td>{review.ReviewComment}</td>
+                  <td>{review.Time}</td>
                 </tr>
               ))}
             </tbody>
@@ -141,4 +101,5 @@ const User = () => {
   );
 };
 
+// Export the component as the default export
 export default User;
