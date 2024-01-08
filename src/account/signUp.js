@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { app } from "../config/firebase-config";
 import {
@@ -26,14 +26,11 @@ import "firebase/auth";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";
 import { UserContext } from "../context/userContext";
-import { ReviewerContext } from "../context/reviewerContext";
 
 const SignUp = () => {
   const context = useContext(UserContext);
-  const reviewerContext = useContext(ReviewerContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleSignUp = () => {
     if (email === "") {
@@ -55,7 +52,6 @@ const SignUp = () => {
             .then((userCredential) => {
               const user = userCredential.user;
               context.setUser({ email: user.email, uid: user.uid });
-              fetchUserDetails(user.email);
             })
             .catch((error) => {
               console.log(error);
@@ -72,65 +68,7 @@ const SignUp = () => {
         });
     }
   };
-  const fetchUserDetails = async (email) => {
-    setIsLoading(true);
-    try {
-      // Making a PUT request
-      const putResponse = await fetch(
-        `https://language-learning-game-backend.rishavkumaraug20005212.workers.dev/user?email=${email}`,
-        {
-          method: "POST",
-        }
-      );
 
-      console.log("putResponse = ", putResponse);
-
-      if (putResponse.ok) {
-        const userDetails = await putResponse.json();
-
-        if (userDetails && userDetails.UserId) {
-          const userName = userDetails.UserName;
-          const appUid = userDetails.UserId;
-
-          reviewerContext.setReviewer({
-            email: email,
-            name: userName,
-            appUid: appUid,
-          });
-
-          toast("Account Created", {
-            type: "success",
-          });
-        } else {
-          toast("Invalid user details in the response", {
-            type: "error",
-          });
-        }
-      } else if (putResponse.status === 404) {
-        toast("Unable to create player account", {
-          type: "error",
-        });
-      }
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Failed to create player account: " + error);
-      setIsLoading(false);
-      toast("Error while creating player account: " + error.message, {
-        type: "error",
-      });
-    }
-  };
-
-  useEffect(() => {
-    if (isLoading) {
-      toast("Signing up...", {
-        type: "info",
-        autoClose: true, // Don't auto-close this toast
-      });
-    } else {
-      toast.dismiss(); // Dismiss any active toasts
-    }
-  }, [isLoading]);
   const handleSubmit = (e) => {
     e.preventDefault();
     handleSignUp();
