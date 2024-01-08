@@ -12,15 +12,13 @@ import "react-toastify/dist/ReactToastify.css";
 // Account Components
 import SignIn from "./account/signIn";
 import SignUp from "./account/signUp";
-import User from "./account/user";
+import AccessDenied from "./account/accessDenied ";
 
 // Firebase Configuration
 import { app } from "./config/firebase-config";
 
 // Contexts
 import { UserContext } from "./context/userContext";
-import { ReviewerContext } from "./context/reviewerContext";
-import {ReviewContext} from "./context/reviewContext";
 
 // Layout Components
 import Footer from "./footer/footer";
@@ -31,13 +29,11 @@ import ProductsPage from "./home/ProductsPage";
 
 // Other Pages
 import ReviewPage from "./pages/ReviewPage";
-import AboutPage from "./utils/AboutPage";
+import AddProductPage from "./utils/AddProductPage";
 import PageNotFound from "./utils/NotFound";
 
 function App() {
   const [user, setUser] = useState(null);
-  const [reviewer, setReviewer] = useState(null);
-  const [reviewId, setReviewId] = useState(null);
 
   const auth = getAuth(app);
 
@@ -53,21 +49,17 @@ function App() {
     <Router>
       <ToastContainer />
       <UserContext.Provider value={{ user, setUser }}>
-        <ReviewerContext.Provider value={{ reviewer, setReviewer }}>
-          <ReviewContext.Provider value={{ reviewId, setReviewId }}>
-            <Header />
-            <Footer />
-            <Routes>
-              <Route exact path="/" element={<ProductsPage />} />
-              <Route exact path="/signin" element={<SignIn />} />
-              <Route exact path="/signup" element={<SignUp />} />
-              <Route exact path="/user" element={<User />} />
-              <Route exact path="/about" element={<AboutPage />} />
-              <Route exact path="/review" element={<ReviewPage />} />
-              <Route exact path="*" element={<PageNotFound />} />
-            </Routes>
-          </ReviewContext.Provider>
-        </ReviewerContext.Provider>
+        <Header />
+        <Footer />
+        <Routes>
+          <Route exact path="/" element={<ProductsPage />} />
+          <Route exact path="/signin" element={<SignIn />} />
+          <Route exact path="/signup" element={<SignUp />} />
+          <Route exact path="/access/denied" element={<AccessDenied />} />
+          <Route exact path="/about" element={<AddProductPage />} />
+          <Route exact path="/review" element={<ReviewPage />} />
+          <Route exact path="*" element={<PageNotFound />} />
+        </Routes>
       </UserContext.Provider>
     </Router>
   );

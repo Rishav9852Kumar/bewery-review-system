@@ -1,0 +1,49 @@
+/* AccessDenied.css */
+
+.access-denied-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #eceff1; /* Light gray background */
+}
+
+.access-denied-content {
+  text-align: center;
+  padding: 40px;
+  border-radius: 15px;
+  background: #fff; /* White background for content */
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.access-denied-content h1 {
+  color: #ff1744; /* Red color for emphasis */
+  font-size: 5em;
+  margin-bottom: 0;
+}
+
+.access-denied-content h2 {
+  color: #333; /* Darker text color for contrast */
+  margin-top: 0;
+}
+
+.access-denied-content p {
+  font-size: 1.2em;
+  margin: 20px 0;
+}
+
+.access-btn {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  background-color: #2979ff; /* Blue background for the button */
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s; /* Smooth transition for hover effects */
+}
+
+.access-btn:hover {
+  background-color: #1565c0; /* Darker blue on hover */
+}

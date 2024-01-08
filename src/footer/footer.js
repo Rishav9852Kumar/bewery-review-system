@@ -14,15 +14,9 @@ const Footer = () => {
                 <Link to="/">Home</Link>
               </li>
               <li>
-                <Link to="/about">About</Link>
-              </li>
-              <li>
-                <Link to="/user">User</Link>
+                <Link to="/about">Add a Product</Link>
               </li>
             </ul>
-          </Col>
-          <Col sm={6} className="footer-text">
-            &copy; 2023 Bewery Review App (BRA). All rights reserved.
           </Col>
         </Row>
       </Container>

@@ -1,7 +1,6 @@
 /* Header.css */
 .container-fluid {
-  background-color: #007bff;
-  color: #fff;
+  color: black;
   padding: 20px;
   display: flex;
   justify-content: space-between;
