@@ -27,7 +27,7 @@ import Footer from "./footer/footer";
 import Header from "./header/Header";
 
 // Home Page
-import HomePage from "./home/HomePage";
+import ProductsPage from "./home/ProductsPage";
 
 // Other Pages
 import ReviewPage from "./pages/ReviewPage";
@@ -54,18 +54,18 @@ function App() {
       <ToastContainer />
       <UserContext.Provider value={{ user, setUser }}>
         <ReviewerContext.Provider value={{ reviewer, setReviewer }}>
-        <ReviewContext.Provider value={{ reviewId, setReviewId }}>
-          <Header />
-          <Routes>
-            <Route exact path="/" element={<HomePage />} />
-            <Route exact path="/signin" element={<SignIn />} />
-            <Route exact path="/signup" element={<SignUp />} />
-            <Route exact path="/user" element={<User />} />
-            <Route exact path="/about" element={<AboutPage />} />
-            <Route exact path="/review" element={<ReviewPage />} />
-            <Route exact path="*" element={<PageNotFound />} />
-          </Routes>
-          <Footer />
+          <ReviewContext.Provider value={{ reviewId, setReviewId }}>
+            <Header />
+            <Footer />
+            <Routes>
+              <Route exact path="/" element={<ProductsPage />} />
+              <Route exact path="/signin" element={<SignIn />} />
+              <Route exact path="/signup" element={<SignUp />} />
+              <Route exact path="/user" element={<User />} />
+              <Route exact path="/about" element={<AboutPage />} />
+              <Route exact path="/review" element={<ReviewPage />} />
+              <Route exact path="*" element={<PageNotFound />} />
+            </Routes>
           </ReviewContext.Provider>
         </ReviewerContext.Provider>
       </UserContext.Provider>

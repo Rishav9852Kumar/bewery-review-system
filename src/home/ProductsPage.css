@@ -1,0 +1,65 @@
+/* ProductsPage.css */
+
+/* Reset margins and padding for consistent spacing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Styling for the filter form */
+.form-inline {
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+.form-group {
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+.product-card {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 0.25rem;
+  transition: transform 0.3s;
+  margin-bottom: 1rem; /* Ensure spacing between cards */
+}
+
+.product-card:hover {
+  transform: translateY(-0.5rem); /* Simple hover effect on cards */
+}
+
+.product-card .card-title {
+  margin-bottom: 0.5rem;
+}
+
+.product-card .card-subtitle {
+  margin-bottom: 1rem;
+}
+
+.product-card .price {
+  font-size: 1.25rem;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.product-card .rating {
+  font-size: 1rem;
+}
+
+.featured-label {
+  display: inline-block;
+  font-size: 0.875rem;
+  color: white;
+  background-color: #28a745;
+  padding: 2px 8px;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+}
+
+/* Add breakpoints to adjust layout on different screen sizes */
+@media (max-width: 768px) {
+  .product-card {
+    margin-bottom: 2rem;
+  }
+}
